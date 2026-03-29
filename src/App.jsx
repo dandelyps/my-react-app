@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { HashRouter, Routes, Route, Link } from 'react-router-dom'
+import './App.css'
 
 function Navbar() {
   return (
-    <nav style={{ display: "flex", gap: "20px", padding: "20px", background: "#333" }}>
-      <Link to="/" style={{ color: "white" }}>Home</Link>
-      <Link to="/matches" style={{ color: "white" }}>Matches ⚽</Link>
-      <Link to="/about" style={{ color: "white" }}>About</Link>
+    <nav>
+      <Link to="/">🏠 Home</Link>
+      <Link to="/matches">⚽ Matches</Link>
+      <Link to="/about">👤 About</Link>
     </nav>
   )
 }
 
 function FriendCard({ name, age, city }) {
   return (
-    <div style={{ border: "1px solid gray", padding: "10px", margin: "10px", borderRadius: "8px" }}>
+    <div className="card">
       <h3>{name}</h3>
       <p>Age: {age}</p>
       <p>City: {city}</p>
@@ -29,7 +30,7 @@ function Home() {
   ]
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="page">
       <h1>Welcome Dandely! 👋</h1>
       <h2>My Friends</h2>
       {friends.map((friend) => (
@@ -46,13 +47,13 @@ function Home() {
 
 function MatchCard({ home, away, homeBadge, awayBadge, date, time, venue }) {
   return (
-    <div style={{ border: "1px solid gray", padding: "10px", margin: "10px", borderRadius: "8px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <img src={homeBadge} style={{ width: "40px" }} />
+    <div className="card">
+      <div className="match-teams">
+        <img src={homeBadge} alt={home} />
         <strong>{home}</strong>
-        <span>vs</span>
+        <span className="vs">VS</span>
         <strong>{away}</strong>
-        <img src={awayBadge} style={{ width: "40px" }} />
+        <img src={awayBadge} alt={away} />
       </div>
       <p>📅 {date} | ⏰ {time}</p>
       <p>🏟️ {venue}</p>
@@ -73,7 +74,7 @@ function Matches() {
   }, [])
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="page">
       <h1>Upcoming Matches ⚽</h1>
       {matches.map((match) => (
         <MatchCard
@@ -93,24 +94,28 @@ function Matches() {
 
 function About() {
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>About Me 👋</h1>
-      <p>My name is Dandely. I'm learning web development!</p>
-      <p>Currently learning React ⚛️</p>
+    <div className="page">
+      <h1>About Me 👤</h1>
+      <div className="about-card">
+        <p>⚽ My name is Dandely</p>
+        <p>📍 From Lampung, Indonesia</p>
+        <p>💻 Currently learning React</p>
+        <p>🏆 Favorite league: Premier League</p>
+      </div>
     </div>
   )
 }
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/about" element={<About />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
